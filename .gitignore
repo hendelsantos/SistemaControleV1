@@ -1,0 +1,59 @@
+# Ambientes virtuais Python
+.venv/
+venv/
+env/
+
+# Banco de dados SQLite
+db.sqlite3
+
+# Arquivos compilados Python
+__pycache__/
+*.py[cod]
+*.so
+
+# Logs e arquivos temporários
+*.log
+*.pot
+*.pyc
+*.pyo
+*.~
+*~
+
+# Configurações de IDEs/editores
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Arquivos de sistema operacional
+.DS_Store
+Thumbs.db
+
+# Diretórios de mídia/upload (se usar)
+media/
+uploads/
+staticfiles/    # Diretório padrão do collectstatic do Django
+
+# Arquivos de cache Django
+*.mo
+*.pot
+
+# Arquivos do coverage (testes)
+htmlcov/
+.coverage
+.tox/
+.nox/
+.pytest_cache/
+
+# Arquivos de migrações python bytecode
+*/migrations/*.pyc
+
+# Pipenv
+Pipfile.lock
+
+# Arquivos de configuração pessoal
+.env
+.env.*
+
+# Node (caso use JS)
+node_modules/
