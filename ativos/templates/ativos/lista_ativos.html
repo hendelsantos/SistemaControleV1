@@ -1,0 +1,60 @@
+{% extends 'demandas/base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Ativos Cadastrados</h2>
+  <form class="row g-2 mb-3" method="get">
+    <div class="col-auto">
+      <input type="text" name="q" class="form-control" placeholder="Buscar descrição..." value="{{ request.GET.q }}">
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary">Filtrar</button>
+      <a href="{% url 'cadastrar_ativo' %}" class="btn btn-success">Novo Ativo</a>
+    </div>
+  </form>
+
+  <div class="row">
+    {% for ativo in page_obj %}
+    <div class="col-md-6 col-lg-4 mb-3">
+      <div class="card h-100 shadow">
+        {% if ativo.foto_principal %}
+        <img src="{{ ativo.foto_principal.url }}" class="card-img-top" style="height:180px;object-fit:cover;">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ ativo.numero_ativo }} - {{ ativo.descricao|default:"Sem descrição" }}</h5>
+          <p class="card-text">
+            <strong>Catalog:</strong> {{ ativo.catalog }}<br>
+            <strong>Local:</strong> {{ ativo.local_armazenamento }}<br>
+            <strong>Inventário:</strong> {{ ativo.data_inventario|date:"d/m/Y" }}
+          </p>
+          <a href="{% url 'detalhe_ativo' pk=ativo.pk %}" class="btn btn-outline-primary btn-sm">Ver detalhes</a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+      <div class="alert alert-info mt-3">Nenhum ativo cadastrado.</div>
+    {% endfor %}
+  </div>
+
+  {% if page_obj.has_other_pages %}
+  <nav>
+    <ul class="pagination justify-content-center">
+      {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Anterior</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Anterior</span></li>
+      {% endif %}
+      <li class="page-item disabled"><span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span></li>
+      {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Próxima</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Próxima</span></li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endif %}
+</div>
+{% endblock %}

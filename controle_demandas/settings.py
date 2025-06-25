@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'demandas',  # seu app
     'notas', # segundo app controle de notas
     'widget_tweaks',
+    'ativos',
 ]
 
 MIDDLEWARE = [

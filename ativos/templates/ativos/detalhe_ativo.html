@@ -1,0 +1,38 @@
+{% extends 'demandas/base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Detalhes do Ativo</h2>
+  <div class="card mb-4 shadow">
+    <div class="card-body">
+      <h4>{{ ativo.numero_ativo }} - {{ ativo.descricao }}</h4>
+      <p>
+        <b>Catalog:</b> {{ ativo.catalog }}<br>
+        <b>Local:</b> {{ ativo.local_armazenamento }}<br>
+        <b>Inventário:</b> {{ ativo.data_inventario|date:"d/m/Y" }}<br>
+        <b>Obs1:</b> {{ ativo.obs1 }}<br>
+        <b>Obs2:</b> {{ ativo.obs2 }}
+      </p>
+      <a href="{% url 'editar_ativo' pk=ativo.pk %}" class="btn btn-warning btn-sm">Editar</a>
+      <a href="{% url 'excluir_ativo' pk=ativo.pk %}" class="btn btn-danger btn-sm">Excluir</a>
+    </div>
+    {% if fotos %}
+      <div class="row m-3">
+        {% for foto in fotos %}
+        <div class="col-md-4 col-6 mb-2">
+          <img src="{{ foto.imagem.url }}" class="img-thumbnail" style="height: 140px; object-fit: cover;">
+        </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <div class="card-footer">
+      <h6>Adicionar Nova Foto</h6>
+      <form method="post" enctype="multipart/form-data" action="{% url 'adicionar_foto' pk=ativo.pk %}">
+        {% csrf_token %}
+        {{ foto_form.as_p }}
+        <button type="submit" class="btn btn-primary btn-sm">Adicionar Foto</button>
+      </form>
+    </div>
+  </div>
+  <a href="{% url 'lista_ativos' %}" class="btn btn-secondary">Voltar</a>
+</div>
+{% endblock %}

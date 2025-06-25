@@ -1,0 +1,12 @@
+{% extends 'demandas/base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Editar Ativo</h2>
+  <form method="post" enctype="multipart/form-data" class="card p-3 shadow">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Salvar Alterações</button>
+    <a href="{% url 'detalhe_ativo' pk=ativo.pk %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'demandas/base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Excluir Ativo</h2>
+  <div class="alert alert-danger">
+    Tem certeza que deseja excluir o ativo <b>{{ ativo.numero_ativo }} - {{ ativo.descricao }}</b>?
+  </div>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Sim, excluir</button>
+    <a href="{% url 'detalhe_ativo' pk=ativo.pk %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}
