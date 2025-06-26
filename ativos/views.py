@@ -4,14 +4,18 @@ from .forms import AtivoForm, FotoAtivoForm
 from django.core.paginator import Paginator
 
 def lista_ativos(request):
-    filtro = request.GET.get('q')
+    filtro_descricao = request.GET.get('q')
+    filtro_num = request.GET.get('num')
     ativos = Ativo.objects.all()
-    if filtro:
-        ativos = ativos.filter(descricao__icontains=filtro)
+    if filtro_descricao:
+        ativos = ativos.filter(descricao__icontains=filtro_descricao)
+    if filtro_num:
+        ativos = ativos.filter(numero_ativo__icontains=filtro_num)
     paginator = Paginator(ativos, 10)  # 10 por página
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'ativos/lista_ativos.html', {'page_obj': page_obj})
+
 
 def cadastrar_ativo(request):
     if request.method == 'POST':
