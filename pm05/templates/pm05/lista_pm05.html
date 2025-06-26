@@ -1,0 +1,72 @@
+{% extends 'demandas/base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Itens Enviados para Reparo (PM05)</h2>
+
+  <!-- Filtro de busca -->
+  <form class="row g-2 mb-3" method="get">
+    <div class="col-sm-6 col-md-4">
+      <input type="text" name="q" class="form-control" placeholder="Buscar descrição..." value="{{ filtro }}">
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary">Filtrar</button>
+      <a href="{% url 'pm05_novo' %}" class="btn btn-success">Novo Envio</a>
+    </div>
+  </form>
+
+  <!-- Cards de itens PM05 -->
+  <div class="row">
+    {% for item in page_obj %}
+      <div class="col-12 col-sm-6 col-lg-3 mb-4">
+        <div class="card h-100 shadow">
+          {% if item.fotos.first %}
+            <a href="{{ item.fotos.first.imagem.url }}" target="_blank">
+              <img src="{{ item.fotos.first.imagem.url }}" class="card-img-top" style="max-height:170px; object-fit:cover;">
+            </a>
+          {% else %}
+            <div class="d-flex align-items-center justify-content-center bg-light" style="height:170px; color:#999;">
+              <span>Sem foto</span>
+            </div>
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ item.catalog_envio }} <small class="text-muted">{{ item.descricao|truncatechars:32 }}</small></h5>
+            <p class="card-text mb-1">
+              <strong>Série:</strong> {{ item.numero_serie }}<br>
+              <strong>Fornecedor:</strong> {{ item.fornecedor_enviado }}<br>
+              <strong>Data envio:</strong> {{ item.data_envio|date:"d/m/Y" }}
+            </p>
+            <a href="{% url 'pm05_detalhe' pk=item.pk %}" class="btn btn-outline-primary btn-sm">Detalhes</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12">
+        <div class="alert alert-info mt-3">Nenhum item encontrado.</div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Paginação -->
+  {% if page_obj.has_other_pages %}
+    <nav>
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if filtro %}&q={{ filtro }}{% endif %}">Anterior</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">Anterior</span></li>
+        {% endif %}
+        <li class="page-item disabled"><span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span></li>
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if filtro %}&q={{ filtro }}{% endif %}">Próxima</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">Próxima</span></li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'demandas/base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>{{ form.instance.pk|yesno:"Editar Envio PM05,Novo Envio PM05" }}</h2>
+  <form method="post" enctype="multipart/form-data" class="row g-3">
+    {% csrf_token %}
+    <div class="col-md-6">
+      {{ form.catalog_envio.label_tag }} {{ form.catalog_envio }}
+    </div>
+    <div class="col-md-6">
+      {{ form.catalog_ersa.label_tag }} {{ form.catalog_ersa }}
+    </div>
+    <div class="col-md-6">
+      {{ form.descricao.label_tag }} {{ form.descricao }}
+    </div>
+    <div class="col-md-6">
+      {{ form.numero_serie.label_tag }} {{ form.numero_serie }}
+    </div>
+    <div class="col-md-3">
+      {{ form.quantidade.label_tag }} {{ form.quantidade }}
+    </div>
+    <div class="col-md-6">
+      {{ form.fornecedor_enviado.label_tag }} {{ form.fornecedor_enviado }}
+    </div>
+    <div class="col-md-3">
+      {{ form.codigo_supplier.label_tag }} {{ form.codigo_supplier }}
+    </div>
+    <div class="col-md-3">
+      {{ form.data_envio.label_tag }} {{ form.data_envio }}
+    </div>
+    <div class="col-md-3">
+      {{ form.numero_invoice.label_tag }} {{ form.numero_invoice }}
+    </div>
+    <div class="col-md-3">
+      {{ form.numero_pm05.label_tag }} {{ form.numero_pm05 }}
+    </div>
+    <div class="col-md-3">
+      {{ form.nf_saida.label_tag }} {{ form.nf_saida }}
+    </div>
+    <div class="col-md-3">
+      {{ form.nf_retorno.label_tag }} {{ form.nf_retorno }}
+    </div>
+    <div class="col-md-12">
+      {{ form.obs1.label_tag }} {{ form.obs1 }}
+    </div>
+    <div class="col-md-12">
+      {{ form.obs2.label_tag }} {{ form.obs2 }}
+    </div>
+    <div class="col-md-12">
+      {{ form.obs3.label_tag }} {{ form.obs3 }}
+    </div>
+    <div class="col-md-12">
+      <label for="id_fotos">Fotos (pode enviar várias):</label>
+      <input type="file" name="fotos" id="id_fotos" multiple class="form-control">
+    </div>
+    <div class="col-md-12">
+      <label for="id_arquivos">Arquivos PDF (pode enviar vários):</label>
+      <input type="file" name="arquivos" id="id_arquivos" multiple class="form-control">
+    </div>
+    <div class="col-12 mt-2">
+      <button type="submit" class="btn btn-success">Salvar</button>
+      <a href="{% url 'pm05_lista' %}" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

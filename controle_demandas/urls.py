@@ -8,6 +8,7 @@ urlpatterns = [
     path('', include('demandas.urls')),         # Raiz do site leva para demandas
     path('notas/', include('notas.urls')),      # App de notas fiscais
     path('ativos/', include('ativos.urls')),    # App de ativos (controle de ativos)
+    path('pm05/', include('pm05.urls')),        # App PM05 (controle de envio de itens)
 ]
 
 # Servir arquivos de mídia em modo DEBUG (fotos dos ativos, uploads etc.)

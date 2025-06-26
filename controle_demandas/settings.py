@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'notas', # segundo app controle de notas
     'widget_tweaks',
     'ativos',
+    'pm05',
 ]
 
 MIDDLEWARE = [

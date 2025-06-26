@@ -1,0 +1,66 @@
+{% extends 'demandas/base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Detalhes do Envio PM05</h2>
+  <div class="card mb-3">
+    <div class="row g-0">
+      <div class="col-md-4 d-flex align-items-center justify-content-center bg-light">
+        {% if item.fotos.first %}
+          <img src="{{ item.fotos.first.imagem.url }}" alt="Foto" class="img-fluid rounded" style="max-width: 90%; max-height: 320px;">
+        {% else %}
+          <span class="text-secondary">Sem foto</span>
+        {% endif %}
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">
+            <strong>CATALOG ENVIO:</strong> {{ item.catalog_envio }}
+          </h5>
+          <p>
+            <strong>CATALOG ERSA:</strong> {{ item.catalog_ersa }}<br>
+            <strong>Descrição:</strong> {{ item.descricao }}<br>
+            <strong>Nº Série:</strong> {{ item.numero_serie }}<br>
+            <strong>Qtde:</strong> {{ item.quantidade }}<br>
+            <strong>Fornecedor:</strong> {{ item.fornecedor_enviado }}<br>
+            <strong>Código Supplier:</strong> {{ item.codigo_supplier }}<br>
+            <strong>Data Envio:</strong> {{ item.data_envio|date:"d/m/Y" }}<br>
+            <strong>Invoice:</strong> {{ item.numero_invoice }}<br>
+            <strong>PM05:</strong> {{ item.numero_pm05 }}<br>
+            <strong>NF Saída:</strong> {{ item.nf_saida }}<br>
+            <strong>NF Retorno:</strong> {{ item.nf_retorno }}<br>
+            <strong>OBS 1:</strong> {{ item.obs1 }}<br>
+            <strong>OBS 2:</strong> {{ item.obs2 }}<br>
+            <strong>OBS 3:</strong> {{ item.obs3 }}<br>
+          </p>
+          <hr>
+          {% if item.fotos.all %}
+          <div class="mb-2">
+            <strong>Fotos adicionais:</strong>
+            <div class="d-flex flex-wrap gap-2">
+              {% for foto in item.fotos.all %}
+                <a href="{{ foto.imagem.url }}" target="_blank">
+                  <img src="{{ foto.imagem.url }}" style="height: 90px; border-radius:6px;">
+                </a>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+          {% if item.arquivos.all %}
+          <div>
+            <strong>Arquivos:</strong>
+            <ul>
+            {% for arq in item.arquivos.all %}
+              <li>
+                <a href="{{ arq.arquivo.url }}" target="_blank">{{ arq.nome|default:"PDF" }}</a>
+              </li>
+            {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+          <a href="{% url 'pm05_lista' %}" class="btn btn-secondary btn-sm mt-3">Voltar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
