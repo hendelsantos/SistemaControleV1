@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'ativos',
     'pm05',
+    'market', # app de mercado
 ]
 
 MIDDLEWARE = [

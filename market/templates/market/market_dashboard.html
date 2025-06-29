@@ -1,0 +1,105 @@
+{% extends 'demandas/base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">Dashboard Market</h2>
+  <div class="mb-4">
+    <form class="row g-2" method="get">
+      <div class="col-md-6">
+        <input type="text" name="q" class="form-control" placeholder="Buscar item, catalog ou descrição..." value="{{ filtro }}">
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+      </div>
+      <div class="col-auto align-self-center">
+        <span class="badge bg-info text-dark p-2">Total requisitado: <b>{{ total_requisicoes }}</b></span>
+      </div>
+    </form>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-10 mx-auto">
+      <canvas id="graficoRequisicoes" height="120"></canvas>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    {% for item in itens %}
+    <div class="col-md-4">
+      <div class="card h-100">
+        {% if item.foto %}
+          <img src="{{ item.foto.url }}" class="card-img-top" alt="Foto {{ item.nome }}" style="height: 200px; object-fit: cover;">
+        {% endif %}
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ item.nome }}</h5>
+          <p class="card-text"><strong>Catálogo:</strong> {{ item.catalogo }}</p>
+          <p class="card-text text-muted small">{{ item.descricao|truncatewords:15 }}</p>
+          <a href="{% url 'market_requisitar' item.id %}" class="btn btn-success mt-auto">Requisitar</a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+      <div class="col-12">
+        <div class="alert alert-warning">Nenhum item encontrado.</div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Paginação -->
+  {% if itens.has_other_pages %}
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center mt-4">
+      {% if itens.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ itens.previous_page_number }}{% if filtro %}&q={{ filtro }}{% endif %}">Anterior</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Anterior</span></li>
+      {% endif %}
+
+      <li class="page-item disabled">
+        <span class="page-link">
+          Página {{ itens.number }} de {{ itens.paginator.num_pages }}
+        </span>
+      </li>
+
+      {% if itens.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ itens.next_page_number }}{% if filtro %}&q={{ filtro }}{% endif %}">Próxima</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">Próxima</span></li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endif %}
+
+</div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctx = document.getElementById('graficoRequisicoes').getContext('2d');
+const grafico = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ chart_labels|safe }},
+        datasets: [{
+            label: 'Mais requisitados',
+            data: {{ chart_data|safe }},
+            borderWidth: 2,
+            backgroundColor: 'rgba(30, 112, 210, 0.6)'
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            x: { beginAtZero: true },
+            y: { beginAtZero: true }
+        }
+    }
+});
+</script>
+{% endblock %}

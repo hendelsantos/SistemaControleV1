@@ -44,6 +44,7 @@
                 <th>Previsão Entrega</th>
                 <th>Recebido</th>
                 <th>Data Pedido</th>
+                <th>PO</th> <!-- NOVA COLUNA -->
             </tr>
         </thead>
         <tbody>
@@ -62,10 +63,11 @@
                     {% endif %}
                 </td>
                 <td>{{ pedido.data_criacao|date:"d/m/Y" }}</td>
+                <td>{{ pedido.informacao }}</td>  <!-- NOVO CAMPO! -->
             </tr>
             {% empty %}
             <tr>
-                <td colspan="7" class="text-center text-muted">Nenhum pedido encontrado.</td>
+                <td colspan="8" class="text-center text-muted">Nenhum pedido encontrado.</td>
             </tr>
             {% endfor %}
         </tbody>

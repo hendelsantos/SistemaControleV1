@@ -1,0 +1,37 @@
+{% extends 'demandas/base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow p-4">
+                <h4 class="mb-3">Requisitar Item</h4>
+                <div class="mb-3 text-center">
+                    {% if item.foto %}
+                        <img src="{{ item.foto.url }}" alt="Foto do item" class="img-fluid rounded" style="max-height: 180px; object-fit: cover;">
+                    {% else %}
+                        <div class="bg-light text-muted py-3 rounded">Sem foto</div>
+                    {% endif %}
+                </div>
+                <p><strong>Nome:</strong> {{ item.nome }}</p>
+                <p><strong>Catálogo:</strong> {{ item.catalogo }}</p>
+                <p><strong>Descrição:</strong> {{ item.descricao }}</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="solicitante" class="form-label">Seu nome</label>
+                        <input type="text" class="form-control" id="solicitante" name="solicitante" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantidade" class="form-label">Quantidade</label>
+                        <input type="number" class="form-control" id="quantidade" name="quantidade" min="1" value="1" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Enviar requisição</button>
+                </form>
+                <div class="mt-3 text-end">
+                    <a href="{% url 'market_dashboard' %}" class="btn btn-secondary">Voltar ao Market</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
