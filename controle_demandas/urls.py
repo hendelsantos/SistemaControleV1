@@ -10,6 +10,8 @@ urlpatterns = [
     path('ativos/', include('ativos.urls')),    # App de ativos (controle de ativos)
     path('pm05/', include('pm05.urls')),     # App PM05 (controle de envio de itens)
     path('market/', include('market.urls')),  # App de mercado (compras e requisições)
+    path('gi/', include('gi_pendente.urls')),
+
               # App PM05 (controle de envio de itens)
 ]
 

@@ -1,0 +1,86 @@
+{% extends 'demandas/base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>GI Pendente</h2>
+        <a href="{% url 'gi_importar_excel' %}" class="btn btn-primary">
+            Importar Excel
+        </a>
+    </div>
+
+    <!-- Gráfico de Quantidades por Catalog -->
+    <div class="card mb-4 p-3">
+        <canvas id="graficoGI" height="80"></canvas>
+    </div>
+
+    <!-- Tabela estilo planilha -->
+    <div class="card p-3">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-sm align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Catalog</th>
+                        <th>BIN</th>
+                        <th>Material</th>
+                        <th>Description</th>
+                        <th>Qnty</th>
+                        <th>Onde foi usado</th>
+                        <th>Ordem</th>
+                        <th>Data</th>
+                        <th>Unit</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in itens %}
+                    <tr>
+                        <td>{{ item.catalogo }}</td>
+                        <td>{{ item.bin }}</td>
+                        <td>{{ item.material }}</td>
+                        <td>{{ item.descricao }}</td>
+                        <td>{{ item.quantidade }}</td>
+                        <td>{{ item.onde_foi_usado }}</td>
+                        <td>{{ item.ordem }}</td>
+                        <td>{{ item.data }}</td>
+                        <td>{{ item.unit }}</td>
+                        <td>{{ item.total }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="10" class="text-center text-muted">Nenhum item cadastrado.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js para exibir gráfico -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctx = document.getElementById('graficoGI').getContext('2d');
+const grafico = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ chart_labels|safe }},
+        datasets: [{
+            label: 'Quantidade',
+            data: {{ chart_data|safe }},
+            borderWidth: 1,
+            backgroundColor: 'rgba(60, 140, 240, 0.5)'
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            x: { beginAtZero: true },
+            y: { beginAtZero: true }
+        }
+    }
+});
+</script>
+{% endblock %}
