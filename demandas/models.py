@@ -3,7 +3,7 @@ from django.db import models
 class Demanda(models.Model):
     nome = models.CharField("Nome do solicitante", max_length=255)
     descricao = models.TextField("Descrição detalhada")
-    catalogo = models.CharField("Catálogo", max_length=50)
+    catalogo = models.CharField("Catalog", max_length=17, blank=True, null=True)  # Agora não obrigatório
     quantidade = models.PositiveIntegerField("Quantidade")
     data_criacao = models.DateTimeField("Data de criação", auto_now_add=True)
     
