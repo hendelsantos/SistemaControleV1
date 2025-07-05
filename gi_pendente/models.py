@@ -1,16 +1,9 @@
 from django.db import models
 
-class GiPendente(models.Model):
-    catalogo = models.CharField(max_length=50)
-    bin = models.CharField(max_length=50)
-    material = models.CharField(max_length=50)
-    descricao = models.CharField(max_length=255)
-    quantidade = models.PositiveIntegerField()
-    onde_foi_usado = models.CharField(max_length=255)
-    ordem = models.CharField(max_length=50)
-    data = models.CharField(max_length=50)
-    unit = models.FloatField()
-    total = models.FloatField()
+class GiPendenteSemana(models.Model):
+    semana = models.CharField(max_length=20)
+    gi_realizado = models.DecimalField(max_digits=10, decimal_places=2)
+    gi_devido = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f"{self.catalogo} - {self.descricao}"
+        return f"Semana {self.semana}"

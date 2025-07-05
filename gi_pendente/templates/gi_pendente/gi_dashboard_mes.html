@@ -1,31 +1,25 @@
 {% extends 'demandas/base.html' %}
 {% block content %}
 <div class="container mt-4">
-    <h2>Dashboard GI Semanal</h2>
-    <canvas id="graficoSemana" height="100"></canvas>
+    <h2>Dashboard GI Mensal</h2>
+    <canvas id="graficoMes" height="100"></canvas>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const ctx = document.getElementById('graficoSemana').getContext('2d');
+        const ctx = document.getElementById('graficoMes').getContext('2d');
         new Chart(ctx, {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: {{ labels|safe }},
                 datasets: [
                     {
                         label: 'GI Realizado (R$)',
                         data: {{ data_realizado|safe }},
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        fill: false,
-                        tension: 0.4
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)'
                     },
                     {
-                        label: 'GI Pendente (R$)', // Alterado aqui
+                        label: 'GI Devido (R$)',
                         data: {{ data_devido|safe }},
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        fill: false,
-                        tension: 0.4
+                        backgroundColor: 'rgba(255, 99, 132, 0.7)'
                     }
                 ]
             },
@@ -39,24 +33,24 @@
     </script>
     <hr>
     <h4>Histórico</h4>
-    <a href="{% url 'gi_input_semana' %}" class="btn btn-primary mb-3">Adicionar Semana</a>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Semana</th>
+                <th>Mês/Ano</th>
                 <th>GI Realizado (R$)</th>
-                <th>GI Pendente (R$)</th> <!-- Alterado aqui -->
+                <th>GI Devido (R$)</th>
             </tr>
         </thead>
         <tbody>
-            {% for s in semanas %}
+            {% for m in meses %}
             <tr>
-                <td>{{ s.semana }}</td>
-                <td>R$ {{ s.gi_realizado|floatformat:2 }}</td>
-                <td>R$ {{ s.gi_devido|floatformat:2 }}</td>
+                <td>{{ m.mes }}/{{ m.ano }}</td>
+                <td>R$ {{ m.gi_realizado|floatformat:2 }}</td>
+                <td>R$ {{ m.gi_devido|floatformat:2 }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    <a href="{% url 'gi_input_mes' %}" class="btn btn-primary mt-3">Adicionar/Editar Mês</a>
 </div>
 {% endblock %}

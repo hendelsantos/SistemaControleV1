@@ -1,0 +1,43 @@
+{% extends 'demandas/base.html' %}
+{% block content %}
+<div class="container mt-4" style="max-width:500px;">
+    <h2>Inputar Valores Mensais</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="mes" class="form-label">Mês:</label>
+            <select class="form-control" id="mes" name="mes" required>
+                <option value="">Selecione...</option>
+                <option>Janeiro</option>
+                <option>Fevereiro</option>
+                <option>Março</option>
+                <option>Abril</option>
+                <option>Maio</option>
+                <option>Junho</option>
+                <option>Julho</option>
+                <option>Agosto</option>
+                <option>Setembro</option>
+                <option>Outubro</option>
+                <option>Novembro</option>
+                <option>Dezembro</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="ano" class="form-label">Ano:</label>
+            <input type="number" class="form-control" id="ano" name="ano" value="2025" required>
+        </div>
+        <div class="mb-3">
+            <label for="gi_realizado" class="form-label">GI Realizado (R$):</label>
+            <input type="number" step="0.01" class="form-control" id="gi_realizado" name="gi_realizado" required>
+        </div>
+        <div class="mb-3">
+            <label for="gi_devido" class="form-label">GI Pendente (R$):</label>
+            <input type="number" step="0.01" class="form-control" id="gi_devido" name="gi_devido" required>
+        </div>
+        <button type="submit" class="btn btn-success w-100">Salvar</button>
+    </form>
+    <div class="mt-3">
+        <a href="{% url 'gi_dashboard_mes' %}" class="btn btn-outline-secondary w-100">← Voltar para Dashboard</a>
+    </div>
+</div>
+{% endblock %}

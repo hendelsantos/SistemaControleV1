@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import GiPendente
+from .models import GiPendenteSemana
 
-@admin.register(GiPendente)
-class GiPendenteAdmin(admin.ModelAdmin):
-    list_display = ['catalogo', 'material', 'quantidade', 'data', 'total']
-    search_fields = ['catalogo', 'material', 'descricao']
-    list_filter = ['data']
+@admin.register(GiPendenteSemana)
+class GiPendenteSemanaAdmin(admin.ModelAdmin):
+    list_display = ['semana', 'gi_realizado', 'gi_devido']
+    search_fields = ['semana']
+    list_filter = ['semana']
