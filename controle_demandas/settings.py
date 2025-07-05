@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'pm05',
     'market', # app de mercado
     'gi_pendente',  # app de GI Pendentes
+    'social',  # app de rede social
 ]
 
 MIDDLEWARE = [

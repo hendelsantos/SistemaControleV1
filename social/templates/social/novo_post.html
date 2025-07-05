@@ -1,0 +1,23 @@
+{% extends 'demandas/base.html' %}
+{% block content %}
+<div class="container" style="max-width: 500px;">
+    <h3 class="mb-4">Nova Postagem</h3>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Seu nome</label>
+            <input type="text" name="nome" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Mensagem</label>
+            <textarea name="mensagem" class="form-control" rows="3" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Foto (opcional)</label>
+            <input type="file" name="imagem" class="form-control">
+        </div>
+        <button class="btn btn-primary">Postar</button>
+        <a href="{% url 'social_feed' %}" class="btn btn-secondary ms-2">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

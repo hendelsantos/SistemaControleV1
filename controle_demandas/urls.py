@@ -5,16 +5,14 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('demandas.urls')),         # Raiz do site leva para demandas
-    path('notas/', include('notas.urls')),      # App de notas fiscais
-    path('ativos/', include('ativos.urls')),    # App de ativos (controle de ativos)
-    path('pm05/', include('pm05.urls')),     # App PM05 (controle de envio de itens)
-    path('market/', include('market.urls')),  # App de mercado (compras e requisições)
+    path('demandas/', include('demandas.urls')),      # Agora demandas acessível em /demandas/
+    path('notas/', include('notas.urls')),
+    path('ativos/', include('ativos.urls')),
+    path('pm05/', include('pm05.urls')),
+    path('market/', include('market.urls')),
     path('gi/', include('gi_pendente.urls')),
-
-              # App PM05 (controle de envio de itens)
+    path('', include('social.urls')),                 # Social é a home e o menu Social
 ]
 
-# Servir arquivos de mídia em modo DEBUG (fotos dos ativos, uploads etc.)
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

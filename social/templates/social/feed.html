@@ -1,0 +1,46 @@
+{% extends 'demandas/base.html' %}
+{% block content %}
+<div class="container bg-body rounded-3 py-3">
+    <h2 class="mb-2">Feed Social</h2>
+    <p class="text-muted mb-4">
+        Esta página é destinada para <strong>comunicados</strong>, <strong>avisos</strong> e interação do time.<br>
+        Publique informações importantes, dúvidas, sugestões ou qualquer mensagem para todos!
+    </p>
+    <a href="{% url 'novo_post' %}" class="btn btn-primary mb-3">Nova Postagem</a>
+    {% for post in posts %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5>{{ post.nome }} <small class="text-muted">{{ post.criado_em|date:"d/m/Y H:i" }}</small></h5>
+                <p>{{ post.mensagem }}</p>
+                {% if post.imagem %}
+                    <img src="{{ post.imagem.url }}" class="img-fluid mb-2" style="max-height:300px;">
+                {% endif %}
+                <hr>
+                <h6>Comentários:</h6>
+                {% for comentario in post.comentarios.all %}
+                    <div class="mb-2">
+                        <strong>{{ comentario.nome }}</strong>: {{ comentario.comentario }}
+                        <small class="text-muted">{{ comentario.criado_em|date:"d/m/Y H:i" }}</small>
+                    </div>
+                {% empty %}
+                    <p class="text-muted">Nenhum comentário ainda.</p>
+                {% endfor %}
+                <form action="{% url 'novo_comentario' post.id %}" method="post" class="mt-2">
+                    {% csrf_token %}
+                    <div class="row g-2">
+                        <div class="col-md-3">
+                            <input type="text" name="nome" class="form-control" placeholder="Seu nome" required>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" name="comentario" class="form-control" placeholder="Comentário" required>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-success w-100">Comentar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
