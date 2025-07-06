@@ -1,4 +1,6 @@
 from pathlib import Path
+import pymysql
+pymysql.install_as_MySQLdb()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -55,13 +57,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'controle_demandas.wsgi.application'
 
-# Banco SQLite (padrão)
+# ...código existente acima...
+
+# Banco MySQL (substitua o bloco DATABASES pelo abaixo)
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'sistemacontrole',
+        'USER': 'hendel',
+        'PASSWORD': 'admin123#',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
+
+# ...restante do código...
 
 # Idioma/horário Brasil
 LANGUAGE_CODE = 'pt-br'
