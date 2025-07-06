@@ -6,7 +6,9 @@ class Demanda(models.Model):
     catalogo = models.CharField("Catalog", max_length=17, blank=True, null=True)  # Agora não obrigatório
     quantidade = models.PositiveIntegerField("Quantidade")
     data_criacao = models.DateTimeField("Data de criação", auto_now_add=True)
+    cotacao_pdf = models.FileField("Cotação (PDF)", upload_to="cotacoes/", blank=True, null=True)
     
+
     ETAPAS = [
         ('aberto', 'Aberto'),
         ('cotado', 'Cotado'),
