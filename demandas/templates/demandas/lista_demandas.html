@@ -36,16 +36,46 @@
                 <td>{{ demanda.quantidade }}</td>
                 <td>{{ demanda.data_criacao|date:"d/m/Y" }}</td>
                 <td>
-                  <span class="badge bg-{% if demanda.etapa == 'finalizado' %}success{% elif demanda.etapa == 'cotado' %}info{% else %}secondary{% endif %}">
+                  <span class="badge bg-
+                    {% if demanda.etapa == 'finalizado' %}
+                        success
+                    {% elif demanda.etapa == 'cotado' %}
+                        info
+                    {% elif demanda.etapa == 'pr_retornada' %}
+                        danger
+                    {% else %}
+                        secondary
+                    {% endif %}">
                       {{ demanda.get_etapa_display }}
                   </span>
                 </td>
                 <td>
                   <div class="progress" style="height: 18px;">
                     <div class="progress-bar
-                      {% if demanda.etapa == 'aberto' %}bg-warning{% elif demanda.etapa == 'cotado' %}bg-info{% elif demanda.etapa == 'pr' %}bg-primary{% elif demanda.etapa == 'finalizado' %}bg-success{% endif %}"
+                      {% if demanda.etapa == 'aberto' %}
+                        bg-warning
+                      {% elif demanda.etapa == 'cotado' %}
+                        bg-info
+                      {% elif demanda.etapa == 'pr' %}
+                        bg-primary
+                      {% elif demanda.etapa == 'pr_retornada' %}
+                        bg-danger
+                      {% elif demanda.etapa == 'finalizado' %}
+                        bg-success
+                      {% endif %}"
                          role="progressbar"
-                         style="width: {% if demanda.etapa == 'aberto' %}20{% elif demanda.etapa == 'cotado' %}40{% elif demanda.etapa == 'pr' %}70{% elif demanda.etapa == 'finalizado' %}100{% endif %}%;">
+                         style="width: 
+                            {% if demanda.etapa == 'aberto' %}
+                                20
+                            {% elif demanda.etapa == 'cotado' %}
+                                40
+                            {% elif demanda.etapa == 'pr' %}
+                                70
+                            {% elif demanda.etapa == 'pr_retornada' %}
+                                85
+                            {% elif demanda.etapa == 'finalizado' %}
+                                100
+                            {% endif %}%;">
                         {{ demanda.get_etapa_display }}
                     </div>
                   </div>
