@@ -22,18 +22,24 @@
     </div>
   </div>
 
-  <div class="row g-4">
+  <div class="row g-3">
     {% for item in itens %}
-    <div class="col-md-4">
-      <div class="card h-100">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="card h-100 shadow-sm border-0" style="border-radius: 0.8rem; min-width: 180px; max-width: 240px; margin: auto;">
         {% if item.foto %}
-          <img src="{{ item.foto.url }}" class="card-img-top" alt="Foto {{ item.nome }}" style="height: 200px; object-fit: cover;">
+          <img src="{{ item.foto.url }}" class="card-img-top" alt="Foto {{ item.nome }}" style="height: 110px; object-fit: cover; border-radius: 0.8rem 0.8rem 0 0;">
+        {% else %}
+          <div class="d-flex align-items-center justify-content-center bg-light" style="height: 110px; border-radius: 0.8rem 0.8rem 0 0;">
+            <span class="text-muted small">Sem foto</span>
+          </div>
         {% endif %}
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">{{ item.nome }}</h5>
-          <p class="card-text"><strong>Catálogo:</strong> {{ item.catalogo }}</p>
-          <p class="card-text text-muted small">{{ item.descricao|truncatewords:15 }}</p>
-          <a href="{% url 'market_requisitar' item.id %}" class="btn btn-success mt-auto">Requisitar</a>
+        <div class="card-body p-2 d-flex flex-column">
+          <h6 class="card-title mb-1" style="font-size: 1rem;">{{ item.nome }}</h6>
+          <p class="card-text text-muted mb-1" style="font-size: 0.92rem;">{{ item.descricao|truncatewords:10 }}</p>
+          <span class="badge bg-primary mb-2" style="font-size: 0.85rem;">{{ item.catalogo }}</span>
+          <a href="{% url 'market_requisitar' item.id %}" class="btn btn-outline-success btn-sm mt-auto w-100">
+            Requisitar
+          </a>
         </div>
       </div>
     </div>
